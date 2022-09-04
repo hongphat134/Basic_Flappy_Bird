@@ -44,7 +44,7 @@
             // 
             // ptrIcon
             // 
-            this.ptrIcon.BackColor = System.Drawing.Color.White;
+            this.ptrIcon.BackColor = System.Drawing.Color.Transparent;
             this.ptrIcon.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ptrIcon.BackgroundImage")));
             this.ptrIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ptrIcon.Location = new System.Drawing.Point(10, 260);
@@ -55,6 +55,7 @@
             // 
             // timerPlay
             // 
+            this.timerPlay.Interval = 20;
             this.timerPlay.Tick += new System.EventHandler(this.timerPlay_Tick);
             // 
             // timerIcon
@@ -75,7 +76,7 @@
             // 
             // lblTitle
             // 
-            this.lblTitle.BackColor = System.Drawing.Color.BlanchedAlmond;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lblTitle.Location = new System.Drawing.Point(398, 224);
@@ -87,12 +88,11 @@
             // 
             // lblScore
             // 
-            this.lblScore.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScore.Location = new System.Drawing.Point(12, 530);
+            this.lblScore.Font = new System.Drawing.Font("Microsoft YaHei UI", 20.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblScore.Location = new System.Drawing.Point(500, 30);
             this.lblScore.Name = "lblScore";
-            this.lblScore.Size = new System.Drawing.Size(172, 47);
+            this.lblScore.Size = new System.Drawing.Size(90, 40);
             this.lblScore.TabIndex = 3;
-            this.lblScore.Text = "Score: ";
             this.lblScore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlUnderGround
@@ -119,9 +119,12 @@
             this.Controls.Add(this.pnlUnderGround);
             this.Controls.Add(this.pnlGame);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmFlappyBird";
             this.RightToLeftLayout = true;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FLAPPY BIRD";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmFlappyBird_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.ptrIcon)).EndInit();

@@ -35,9 +35,10 @@ namespace Flappy_Bird
             NhipGame = 20;
             DiemSo = 0;
             vitriXetDiem = 0;
-            trangthai = State.Start;
+            trangthai = State.Stop;
             VT = plr.MangOngDuoi.Length - 1;
-            lblScore.Text = "Score: " + DiemSo.ToString();
+            lblScore.BackColor = Color.Transparent;
+            lblScore.Text = DiemSo.ToString();            
         }
       
         double DiemSo;
@@ -49,65 +50,57 @@ namespace Flappy_Bird
 
             foreach (PictureBox ptr in plr.MangOngDuoi)
             {
-                ptr.Location = new Point(ptr.Location.X - 10, ptr.Location.Y);
+                ptr.Location = new Point(ptr.Location.X - 5, ptr.Location.Y);
             }
 
             foreach (PictureBox ptr in plr.MangOngTren)
             {
-                ptr.Location = new Point(ptr.Location.X - 10, ptr.Location.Y);
-            }
-
-
-            
+                ptr.Location = new Point(ptr.Location.X - 5, ptr.Location.Y);
+            }            
 
             //Xử lý tính điểm
             if(ptrIcon.Location.X==(plr.MangOngDuoi[vitriXetDiem].Location.X+plr.Size_Ong.Width))
             {
                 DiemSo++;
-                lblScore.Text = "Score: " + DiemSo.ToString();
+                lblScore.Text = DiemSo.ToString();
                 vitriXetDiem++;
                 if (vitriXetDiem == plr.MangOngDuoi.Length) vitriXetDiem = 0;
             }
-
-            if(Width-plr.MangOngDuoi[VT].Location.X==plr.KhoangCach){
-                
+            //Khi ống đã di chuyển qua trái và vitri < Location.X = 0 thì set lại LOCATION
+            if(Width-plr.MangOngDuoi[VT].Location.X==plr.KhoangCach){                
                 if (VT == plr.MangOngDuoi.Length - 1) VT = 0;
                 else VT++;
                 plr.TaoOng(VT);                                      
-            }
-           
-
-            
+            }                       
         }
-
        
         private void frmFlappyBird_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((Keys)e.KeyChar == Keys.Enter)
             {
-                if (trangthai == State.Start)
+                if (trangthai == State.Stop)
                 {
                     timerPlay.Start();
                     timerIcon.Start();
                     timerBirdMove.Start();
                     
                     lblTitle.Visible = false;
-                    trangthai=State.Stop;
+                    trangthai=State.Start;
                 }
-                else if(trangthai==State.Stop)
+                else if(trangthai==State.Start)
                 {
                     timerPlay.Stop();
                     timerIcon.Stop();
                     timerBirdMove.Stop();
                     lblTitle.Visible = true;
-                    trangthai = State.Start;
+                    trangthai = State.Stop;
                 }
             }
-            else
-            {
-                ptrIcon.Location = new Point(ptrIcon.Location.X, ptrIcon.Location.Y - (NhipGame*4));
+            else if((Keys)e.KeyChar == Keys.Space && trangthai == State.Start)
+            {                
+                ptrIcon.Location = new Point(ptrIcon.Location.X, ptrIcon.Location.Y - (NhipGame * 4));
                 ptrIcon.BackgroundImage = Image.FromFile("image/up.png");
-                dem = 0;
+                dem = 0;               
             }
         }
 
@@ -121,32 +114,38 @@ namespace Flappy_Bird
             //điều kiện vào phạm vi va chạm
             if (ptrIcon.Location.X+ptrIcon.Size.Width>=plr.MangOngDuoi[vitriXetDiem].Location.X)
             {
-                //xét va chạm ống dưới
+                //xét va chạm ống dưới
                 if (ptrIcon.Location.Y > plr.MangOngDuoi[vitriXetDiem].Location.Y - ptrIcon.Size.Height || ptrIcon.Location.Y < plr.MangOngTren[vitriXetDiem].Location.Y + plr.Size_Ong.Height)
                 {
-                    ptrIcon.BackgroundImage = Image.FromFile("image/birdfall.jpg");
+                    ptrIcon.BackgroundImage = Image.FromFile("image/birdfall.png");
                     timerPlay.Stop();
                     timerBirdMove.Stop();
                     this.KeyPress -= frmFlappyBird_KeyPress;
                 }
-            }
-
-            
-           
+            }            
+            //Xử lý va chạm dưới đất
             if (ptrIcon.Location.Y + ptrIcon.Size.Height >=pnlGame.Height)
             {
+                timerPlay.Stop();
                 timerIcon.Stop();
                 timerBirdMove.Stop();
                 MessageBox.Show("You lose!");
                 Close();
             }
          }
-
         
         private void timerBirdMove_Tick(object sender, EventArgs e)
         {
-            if (dem>1&&dem<3) {
+            if(dem == 1)
+            {
+                ptrIcon.BackgroundImage = Image.FromFile("image/ups.png");
+            }
+            else if (dem == 2) {
                 ptrIcon.BackgroundImage = Image.FromFile("image/icon.png");
+            }
+            else if(dem == 3)
+            {
+                ptrIcon.BackgroundImage = Image.FromFile("image/downs.png");
             }
             else if(dem>3)
             {

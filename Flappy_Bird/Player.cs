@@ -56,7 +56,7 @@ namespace Flappy_Bird
             MangOngDuoi = new PictureBox[4];
             MangOngTren = new PictureBox[4];
             size_Ong = new Size(80, 400);
-            khoangCach = 350;
+            khoangCach = 400;
             khoangCachTrenDuoi = 200;
             frmPlayer = frm;
             r = new Random();
